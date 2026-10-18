@@ -1,0 +1,2 @@
+rootProject.name = "Moncef browser"
+include ':app'

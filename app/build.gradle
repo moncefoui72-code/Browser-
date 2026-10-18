@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 34
+
+    defaultConfig {
+        applicationId "com.moncef.browser"
+        minSdkVersion 24
+        targetSdkVersion 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        // قد تحتاج لتعديل هذا إذا أعطاك الخطأ؛ أتركته متوافقًا مع Compose 1.4.x
+        kotlinCompilerExtensionVersion '1.4.7'
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    namespace "com.moncef.browser"
+
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+// Task: copy repo root/icon.png into mipmap so the build uses your icon
+def rootIcon = file("$rootDir/icon.png")
+if (rootIcon.exists()) {
+    tasks.register("copyAppIcon", Copy) {
+        from(rootIcon)
+        into("$projectDir/src/main/res/mipmap-anydpi-v26")
+        rename { "ic_launcher.png" }
+    }
+    tasks.register("copyAppIconRound", Copy) {
+        from(rootIcon)
+        into("$projectDir/src/main/res/mipmap-anydpi-v26")
+        rename { "ic_launcher_round.png" }
+    }
+    // make sure copying happens before resource processing
+    preBuild.dependsOn(tasks.named("copyAppIcon"), tasks.named("copyAppIconRound"))
+} else {
+    // no icon found at repo root — build will continue but use default launcher
+    println("Warning: root icon.png not found at $rootDir/icon.png — add it to set app icon.")
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.24"
+
+    // Jetpack Compose + Material 3
+    implementation "androidx.activity:activity-compose:1.9.0"
+    implementation "androidx.compose.ui:ui:1.4.3"
+    implementation "androidx.compose.material3:material3:1.1.1"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.4.3"
+    debugImplementation "androidx.compose.ui:ui-tooling:1.4.3"
+
+    // Gson for simple JSON persistence of tabs
+    implementation "com.google.code.gson:gson:2.10.1"
+
+    // Media3 ExoPlayer (used later)
+    implementation "androidx.media3:media3-exoplayer:1.4.1"
+    implementation "androidx.media3:media3-ui:1.4.1"
+
+    // OkHttp (networking)
+    implementation "com.squareup.okhttp3:okhttp:4.11.0"
+}
