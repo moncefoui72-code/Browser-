@@ -8,7 +8,6 @@ import { useBrowserStore, getUrlForInput, getDomain, toTitle } from '@/store/bro
 export default function HomeScreen() {
   const router = useRouter();
   const { searchEngine, history, tabs, createTab, setActiveTab } = useBrowserStore();
-
   const frequentVisits = useMemo(() => history.slice(0, 3), [history]);
 
   const openPage = (input: string) => {
@@ -27,8 +26,6 @@ export default function HomeScreen() {
     setActiveTab(tab.id);
     router.push({ pathname: '/browser', params: { tabId: tab.id } });
   };
-
-  const openShortcut = (url: string) => openPage(url);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -62,7 +59,7 @@ export default function HomeScreen() {
           <Text style={styles.privacyText}>Your Privacy Matters</Text>
         </View>
 
-        <TouchableOpacity style={styles.searchBar} onPress={() => router.push('/search')} activeOpacity={0.9}>
+        <TouchableOpacity style={styles.searchBar} activeOpacity={0.9} onPress={() => router.push('/search')}>
           <Text style={styles.searchEngineMark}>G</Text>
           <Text style={styles.searchPlaceholder}>Search or type web address...</Text>
           <View style={styles.searchActions}>
@@ -73,7 +70,7 @@ export default function HomeScreen() {
 
         <View style={styles.shortcutGrid}>
           {shortcuts.map((item) => (
-            <TouchableOpacity key={item.id} style={styles.shortcutItem} onPress={() => openShortcut(item.url)}>
+            <TouchableOpacity key={item.id} style={styles.shortcutItem} onPress={() => openPage(item.url)}>
               <View style={[styles.shortcutIconWrap, { backgroundColor: item.color }]}>
                 <Text style={[styles.shortcutIcon, { color: item.textColor ?? '#fff' }]}>{item.icon}</Text>
               </View>
@@ -186,6 +183,213 @@ const styles = StyleSheet.create({
   toolbarPlus: { color: '#fff', fontSize: 32, fontWeight: '700' },
   toolbarGlyph: { color: '#fff', fontSize: 28 },
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
