@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Video, ResizeMode } from 'expo-video';
 
 export default function PlayerScreen() {
   const router = useRouter();
@@ -17,16 +18,24 @@ export default function PlayerScreen() {
           <Text style={styles.title}>Player</Text>
         </View>
 
-        <View style={styles.playerArea}>
-          <Text style={styles.placeholder}>Built-in player placeholder</Text>
+        <View style={styles.playerWrap}>
+          <Video
+            source={{ uri: 'https://www.w3schools.com/html/mov_bbb.mp4' }}
+            style={styles.player}
+            useNativeControls
+            resizeMode={ResizeMode.CONTAIN}
+            isMuted={false}
+            shouldPlay={playing}
+            isLooping={false}
+          />
         </View>
 
         <View style={styles.controls}>
-          <TouchableOpacity onPress={() => setPlaying(!playing)}>
+          <TouchableOpacity onPress={() => setPlaying((prev) => !prev)}>
             <Text style={styles.controlText}>{playing ? 'Pause' : 'Play'}</Text>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Text style={styles.controlText}>10s</Text>
+            <Text style={styles.controlText}>-10s</Text>
           </TouchableOpacity>
           <TouchableOpacity>
             <Text style={styles.controlText}>1×</Text>
@@ -46,8 +55,8 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'center', marginBottom: 20 },
   back: { color: '#f8fafc', fontSize: 34, marginRight: 14 },
   title: { color: '#f8fafc', fontSize: 24, fontWeight: '700' },
-  playerArea: { flex: 1, backgroundColor: '#111827', borderRadius: 20, justifyContent: 'center', alignItems: 'center' },
-  placeholder: { color: '#94A3B8', fontSize: 18 },
-  controls: { marginTop: 22, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#1E293B', borderRadius: 16, paddingHorizontal: 18, paddingVertical: 12 },
+  playerWrap: { flex: 1, backgroundColor: '#111827', borderRadius: 20, overflow: 'hidden' },
+  player: { width: '100%', height: '100%' },
+  controls: { marginTop: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#1E293B', borderRadius: 16, paddingHorizontal: 18, paddingVertical: 12 },
   controlText: { color: '#fff', fontWeight: '700', fontSize: 16 },
 });
