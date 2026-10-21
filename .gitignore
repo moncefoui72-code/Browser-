@@ -1,0 +1,12 @@
+node_modules/
+.expo/
+.expo-shared/
+dist/
+web-build/
+coverage/
+*.log
+.DS_Store
+android/.gradle/
+android/app/build/
+android/build/
+ios/build/

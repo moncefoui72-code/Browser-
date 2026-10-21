@@ -1,0 +1,33 @@
+{
+  "name": "MoncefBrowser",
+  "slug": "moncef-browser",
+  "version": "1.0.0",
+  "orientation": "portrait",
+  "userInterfaceStyle": "dark",
+  "scheme": "moncef-browser",
+  "splash": {
+    "backgroundColor": "#0F172A"
+  },
+  "assetBundlePatterns": [
+    "**/*"
+  ],
+  "android": {
+    "package": "com.moncef.browser",
+    "permissions": [
+      "INTERNET",
+      "ACCESS_NETWORK_STATE",
+      "WRITE_EXTERNAL_STORAGE",
+      "READ_EXTERNAL_STORAGE"
+    ],
+    "usesCleartextTraffic": true,
+    "allowBackup": false
+  },
+  "plugins": [
+    "expo-router",
+    "expo-video"
+  ],
+  "experiments": {
+    "typedRoutes": true,
+    "tsconfigPaths": true
+  }
+}
