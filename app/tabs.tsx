@@ -1,5 +1,5 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
@@ -9,20 +9,28 @@ export default function BrowserScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
   const tabId = String(params.tabId ?? '');
-  const activeTab = useBrowserStore((state) => state.tabs.find((tab) => tab.id === tabId) ?? state.tabs[0]);
+  const tabs = useBrowserStore((state) => state.tabs);
+  const setActiveTab = useBrowserStore((state) => state.setActiveTab);
   const updateTab = useBrowserStore((state) => state.updateTab);
   const addVisit = useBrowserStore((state) => state.addVisit);
-  const setActiveTab = useBrowserStore((state) => state.setActiveTab);
+
+  const activeTab = tabs.find((tab) => tab.id === tabId) ?? tabs[0];
+  const webRef = useRef<WebView>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoForward, setCanGoForward] = useState(false);
   const [desktopMode, setDesktopMode] = useState(activeTab?.desktopMode ?? false);
-  const webRef = useRef<WebView>(null);
 
-  if (!activeTab) return null;
+  useEffect(() => {
+    if (activeTab) {
+      setActiveTab(activeTab.id);
+    }
+  }, [activeTab, setActiveTab]);
 
-  setActiveTab(activeTab.id);
+  if (!activeTab) {
+    return null;
+  }
 
   const userAgent = desktopMode
     ? 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36'
@@ -139,265 +147,6 @@ const styles = StyleSheet.create({
   navText: { color: '#fff', fontSize: 28 },
   navDisabled: { color: '#64748B' },
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
